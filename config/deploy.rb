@@ -1,5 +1,4 @@
 sh 'ssh-add'
-lock '~> 3.16.0'
 
 set :application, 'tiger-backend'
 set :repo_url, 'git@gitlab.com:fooyostudio/tiger-backend.git'
