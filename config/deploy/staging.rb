@@ -1,4 +1,4 @@
-set :deploy_to, '/home/deploy/tiger-backend-staging'
+set :deploy_to, '/home/deploy/apps/tiger-backend-staging'
 set :branch, 'test'
 set :rails_env, 'staging'
 set :puma_threads, [1, 5]
