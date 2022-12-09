@@ -1,0 +1,16 @@
+development:
+  adapter: redis
+  url: redis://localhost:6379/1
+
+staging:
+  adapter: redis
+  url: redis://:xx@localhost:6379/1
+  channel_prefix: tiger_server_staging
+
+test:
+  adapter: async
+
+production:
+  adapter: redis
+  url: redis://:xx@localhost:6379/1
+  channel_prefix: tiger_server_production
