@@ -29,6 +29,6 @@ class Card < ApplicationRecord
   before_create do
     code = 'TB' + [('a'..'z').to_a, (0..9).to_a].flatten.sample(6).join
     code = ('TB' + [('a'..'z').to_a, (0..9).to_a].flatten.sample(6).join) while Card.find_by(code: code)
-    self.code = code
+    self.code = code if self.code.blank?
   end
 end

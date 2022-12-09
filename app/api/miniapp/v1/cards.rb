@@ -6,7 +6,7 @@ module Miniapp::V1
       params do
         requires :code, type: String
       end
-      post '/', desc: '扫描卡片二维码' do
+      post '/scan_qrcode', desc: '扫描卡片二维码' do
         card = Card.find_by(code: params[:code])
         return { code: 300, message: '二维码不存在' } unless card
         return { code: 300, message: '二维码已使用' } if card.user_id
