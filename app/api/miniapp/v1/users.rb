@@ -1,7 +1,10 @@
 module Miniapp::V1
   class Users < Grape::API
     namespace :users do
-      desc '提交抽奖申请', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      desc "{ code: 200, message: '请求成功' }<br>
+            { code: 300, message: '其他错误' }<br>
+            ",
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       post '/apply_lottery', desc: '提交抽奖申请' do
         cards = current_user.cards.order(:id)
         unused_tiger_cards = cards.select { |c| c.tiger? && !c.is_used? }
@@ -27,7 +30,9 @@ module Miniapp::V1
         end
       end
 
-      desc '微信一键登录'
+      desc "{ code: 200, message: '请求成功', data: { is_new: 是否新用户, token: token, user: #{ hash = {}; User.column_names.map { |c| hash[c] = 'xx' }; hash } }  } <br>
+            { code: 300, message: '其他错误' }<br>
+            ".gsub('=>', ': ')
       route_setting :skip_auth, true
       params do
         requires :code, type: String
@@ -63,8 +68,10 @@ module Miniapp::V1
       #   end
       # end
 
-
-      desc '修改用户信息', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      desc "{ code: 200, message: '修改成功', data: { user: #{ hash = {}; User.column_names.map { |c| hash[c] = 'xx' }; hash } }  } <br>
+      { code: 300, message: '其他错误' }<br>
+      ".gsub('=>', ': '),
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       params do
         optional :user, type: Hash do
           optional :nick_name, type: String
@@ -82,7 +89,8 @@ module Miniapp::V1
         end
       end
 
-      desc '我的卡片', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      desc "{ code: 200, message: '修改成功', data: { unused_tiger_card_count: xx, unused_rabbit_card_count: xx  }",
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       get '/my_cards', desc: '我的卡片' do
         cards = current_user.cards
         unused_tiger_card_count = cards.select { |c| c.tiger? && !c.is_used? }.size
@@ -90,7 +98,8 @@ module Miniapp::V1
         { code: 200, message: '请求成功', data: { unused_tiger_card_count: unused_tiger_card_count, unused_rabbit_card_count: unused_rabbit_card_count } }
       end
 
-      desc '抽奖资格', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      desc "{ code: 200, message: '修改成功', data: { draw_lottery_count: xx, is_need_contact_info: true或者false  }",
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       get '/my_lotteries', desc: '抽奖资格' do
         cards = current_user.cards
         unused_tiger_card_count = cards.select { |c| c.tiger? && !c.is_used? }.size
@@ -99,7 +108,9 @@ module Miniapp::V1
         { code: 200, message: '请求成功', data: { draw_lottery_count: draw_lottery_count, is_need_contact_info: current_user.real_name.blank? } }
       end
 
-      desc '抽奖历史', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      desc "{ code: 200, message: '修改成功', data: [#{ hash = {}; LotteryRecord.column_names.map { |c| hash[c] = 'xx' }; hash }] }  <br>
+      ".gsub('=>', ': '),
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       params do
         optional :page, type: Integer, desc: '第几页'
         optional :per, type: Integer, desc: '每页多少个， 默认10'
@@ -109,7 +120,10 @@ module Miniapp::V1
         @lottery_records = @lottery_records.page(params[:page]).per(params[:per])
       end
 
-      desc '用户详情', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      route_setting :skip_auth, true
+      desc "{ code: 200, message: '请求成功', data: #{ hash = {}; User.column_names.map { |c| hash[c] = 'xx' unless c.in?(['created_at', 'updated_at', 'deleted_at']) }; hash } } <br>
+            ".gsub('=>', ': '),
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       get '/info', desc: '用户详情', jbuilder: 'miniapp/v1/users/info.jbuilder' do
         @user = current_user
       end

@@ -2,7 +2,12 @@ module Miniapp::V1
   class Cards < Grape::API
     namespace :cards do
 
-      desc '扫描卡片二维码', headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      desc "{ code: 200, message: '请求成功', data: { card_type: tiger或者rabbit或者ths } }<br>
+            { code: 300, message: '二维码不存在' }<br>
+            { code: 300, message: '二维码已使用' }<br>
+            { code: 422, message: '其他错误' }<br>
+            ",
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
       params do
         requires :code, type: String
       end
