@@ -20,7 +20,7 @@ class User < ApplicationRecord
   has_many :lottery_records, dependent: :destroy
 
   after_update do
-    if saved_change_to_real_name? || saved_change_to_real_mobile? || saved_change_to_email
+    if saved_change_to_real_name? || saved_change_to_mobile? || saved_change_to_email?
       lottery_records.update_all(user_real_name: real_name, user_mobile: mobile, user_email: email)
     end
   end
