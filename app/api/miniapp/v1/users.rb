@@ -1,6 +1,22 @@
 module Miniapp::V1
   class Users < Grape::API
     namespace :users do
+      desc "{ code: 200, message: '请求成功', url: xxx }<br>
+            { code: 300, message: '请求失败' }<br>
+            ",
+      headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
+      params do
+        requires :file, :type => File, :desc => "图片"
+      end
+      post '/oss_upload', desc: '图片上传' do
+        url = AliyunOss.new.upload_from_api(params[:file][:tempfile])
+        if url.present?
+          { code: 200, message: '请求成功', url: url }
+        else
+          { code: 300, message: '请求失败' }
+        end
+      end
+
       desc "{ code: 200, message: '请求成功' }<br>
             { code: 300, message: '其他错误' }<br>
             ",
