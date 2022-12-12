@@ -120,7 +120,6 @@ module Miniapp::V1
         @lottery_records = @lottery_records.page(params[:page]).per(params[:per])
       end
 
-      route_setting :skip_auth, true
       desc "{ code: 200, message: '请求成功', data: #{ hash = {}; User.column_names.map { |c| hash[c] = 'xx' unless c.in?(['created_at', 'updated_at', 'deleted_at']) }; hash } } <br>
             ".gsub('=>', ': '),
       headers: { 'Token' => { required: true, description: 'Token认证', default: Base::Token } }
