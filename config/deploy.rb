@@ -5,7 +5,8 @@ set :repo_url, 'git@gitlab.com:fooyostudio/tiger-backend.git'
 set :pty, false
 
 append :linked_files, 'config/database.yml', 'config/master.key'
-# namespace :deploy do
+namespace :deploy do
+  before :check, :'puma:config' # 先上传staging.rb  production.rb中的puma_workers
 #   namespace :check do
 #     before :linked_files, :set_database_and_master_key do
 #       on roles(:app), in: :sequence, wait: 10 do
@@ -18,11 +19,13 @@ append :linked_files, 'config/database.yml', 'config/master.key'
 #       end
 #     end
 #   end
-# end
+end
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # Default value for keep_releases is 5
+Rake::Task["deploy:assets:precompile"].clear_actions  # 跳过assets:precompile
+
 set :keep_releases, 3
 set :conditionally_migrate, true
 set :keep_assets, 2
