@@ -31,8 +31,8 @@ class LotteryRecord < ApplicationRecord
   end
 
   before_create do
-    sn = created_at.strftime('%Y%m%d%H%M%S') + [('a'..'z').to_a, (0..9).to_a].flatten.sample(6).join
-    sn = (created_at.strftime('%Y%m%d%H%M%S') + [('a'..'z').to_a, (0..9).to_a].flatten.sample(6).join) while LotteryRecord.find_by(sn: sn)
+    sn = created_at.strftime('%Y%m%d') + [('A'..'Z').to_a, (0..9).to_a].flatten.sample(5).join
+    sn = (created_at.strftime('%Y%m%d') + [('A'..'Z').to_a, (0..9).to_a].flatten.sample(5).join) while LotteryRecord.find_by(sn: sn)
     self.sn = sn
   end
 end
