@@ -16,7 +16,7 @@ en:
         card_type_text: '类型'
         code: '编号'
         is_used: '是否提交抽奖'
-        user: '中奖用户'
+        user: '提交抽奖用户'
       lottery_record:
         user_id: '用户id'
         user_real_name: '姓名'
