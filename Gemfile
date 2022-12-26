@@ -10,6 +10,7 @@ gem 'redis', '~> 4.0'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
+gem 'rake'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

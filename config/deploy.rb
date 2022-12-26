@@ -24,7 +24,7 @@ end
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # Default value for keep_releases is 5
-Rake::Task["deploy:assets:precompile"].clear_actions  # 跳过assets:precompile
+# Rake::Task["deploy:assets:precompile"].clear_actions  # 跳过assets:precompile
 
 set :keep_releases, 3
 set :conditionally_migrate, true
