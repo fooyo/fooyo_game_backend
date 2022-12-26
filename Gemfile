@@ -61,3 +61,6 @@ gem 'kaminari', '~> 1.2.1'
 gem 'paranoia', '~> 2.4.3'
 gem 'whenever', require: false
 gem 'rqrcode'
+gem 'devise'
+gem 'activeadmin'
+gem 'active_admin_theme'

@@ -1,0 +1,29 @@
+en:
+  activerecord:
+    models:
+      user: '用户'
+      card: '卡片'
+      lottery_record: '抽奖记录'
+    attributes:
+      user:
+        title: '分类'
+        image: '主图'
+        summary: '简介'
+        about_info: '子分类'
+        desc: '内容'
+      card:
+        card_type: '类型'
+        card_type_text: '类型'
+        code: '编号'
+        is_used: '是否提交抽奖'
+        user: '中奖用户'
+      lottery_record:
+        user_id: '用户id'
+        user_real_name: '姓名'
+        user_mobile: '联络号码'
+        user_email: '邮箱'
+        sn: '抽奖编号'
+        tiger_card_id: '虎卡'
+        rabbit_card_id: '兔卡'
+        created_at: '提交时间'
+

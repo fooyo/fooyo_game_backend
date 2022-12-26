@@ -20,6 +20,8 @@
 #
 class LotteryRecord < ApplicationRecord
   belongs_to :user
+  belongs_to :tiger_card, class_name: :Card, optional: true
+  belongs_to :rabbit_card, class_name: :Card, optional: true
 
   before_save do
     if user_id_changed?
