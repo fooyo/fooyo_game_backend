@@ -6,7 +6,7 @@ ActiveAdmin.register LotteryRecord do
    # config.paginate = true
   # config.per_page = 20
   actions :all, except: %i[new destroy edit show]
-  index download_links: false do
+  index download_links: [:csv] do
     column :sn
     column :user_real_name
     column :user_mobile
@@ -19,6 +19,22 @@ ActiveAdmin.register LotteryRecord do
       resource.rabbit_card.code
     end
     actions do |resource|
+    end
+  end
+
+  csv do
+    column :sn
+    column :user_real_name
+    column :user_mobile
+    column :user_email
+    column :created_at do |resource|
+      resource.created_at.strftime('%Y-%m-%d %H:%M:%S')
+    end
+    column :tiger_card_id do |resource|
+      resource.tiger_card.code
+    end
+    column :rabbit_card_id do |resource|
+      resource.rabbit_card.code
     end
   end
 
