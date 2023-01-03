@@ -16,7 +16,7 @@ module Miniapp::V1
         return { code: 300, message: '二维码不存在' } unless card
         return { code: 300, message: '二维码已使用' } if card.user_id
 
-        if card.update(user_id: card.ths? ? nil : current_user.id)
+        if card.update(user_id: card.ths? ? nil : current_user.id, user_at: card.ths? ? nil : Time.current)
           { code: 200, message: '请求成功', data: { card_type: card.card_type } }
         else
           { code: 422, message: card.errors.full_messages.join('; ') }

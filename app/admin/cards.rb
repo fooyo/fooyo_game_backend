@@ -16,8 +16,14 @@ ActiveAdmin.register Card do
   index download_links: false do
     column :code
     column :card_type_text
-    column '是否使用' do |resource|
-      resource.user_id.present?
+    column '是否被抽取' do |card|
+      card.user_id.present?
+    end
+    column '被抽取时间' do |card|
+      card.user_at&.strftime('%Y-%m-%d %H:%M:%S')
+    end
+    column '抽取用户' do |card|
+      simple_format "用户id: #{card.user_id}, 昵称: #{card.user&.nick_name},  头像: #{image_tag card.user&.avatar, size: '20x20' if card.user&.avatar },  open_id: #{card.user&.open_id}" if card.user
     end
     column :is_used
     column :user do |resource|

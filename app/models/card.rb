@@ -10,6 +10,7 @@
 #  is_used        :boolean          default("false")
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  user_at        :datetime
 #
 # Indexes
 #
@@ -18,6 +19,8 @@
 #
 class Card < ApplicationRecord
   belongs_to :user, optional: true
+  has_one :tiger_lottery_record, class_name: :LotteryRecord, foreign_key: :tiger_card_id
+  has_one :rabbit_lottery_record, class_name: :LotteryRecord, foreign_key: :rabbit_card_id
 
   enum card_type: { tiger: 1, rabbit: 2, ths: 3 }
   CARD_TYPE_TEXT = { tiger: '虎', rabbit: '兔', ths: '谢谢参与' }.stringify_keys
