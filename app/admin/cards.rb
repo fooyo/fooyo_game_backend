@@ -13,7 +13,7 @@ ActiveAdmin.register Card do
   # config.per_page = 20
   actions :all, except: %i[new destroy edit show]
 
-  index download_links: false do
+  index download_links: [:csv] do
     column :code
     column :card_type_text
     column '是否被抽取' do |card|
@@ -33,7 +33,37 @@ ActiveAdmin.register Card do
     end
   end
 
+  csv do
+    column :code
+    column :card_type_text
+    column '是否被抽取' do |card|
+      card.user_id.present? ? '是' : '否'
+    end
+    column '被抽取时间' do |card|
+      card.user_at&.strftime('%Y-%m-%d %H:%M:%S')
+    end
+    column '抽取用户id' do |card|
+      card.user_id
+    end
+    column '抽取用户昵称' do |card|
+      card.user&.nick_name
+    end
+    column :is_used do |card|
+      card.is_used? ? '是' : '否'
+    end
+    column '提交抽奖用户姓名' do |resource|
+      resource.user&.real_name
+    end
+    column '提交抽奖用户电话' do |resource|
+      resource.user&.mobile
+    end
+    column '提交抽奖用户email' do |resource|
+      resource.user&.email
+    end
+  end
+
   filter :card_type_text, as: :select
+  filter :user_id_not_null, :as => :boolean, collection: -> { [['是', 1], ['否', 0]] }, label: '是否被抽取'
   filter :is_used, collection: -> { [['是', 1], ['否', 0]] }
   filter :code
 end
