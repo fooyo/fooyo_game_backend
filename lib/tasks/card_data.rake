@@ -3,7 +3,7 @@ namespace :card_data do
   desc 'export data'
   task export: :environment do
     CSV.open('card.csv', 'w') do |csv|
-      Card.where('id>6001').find_each do |card|
+      Card.where('id>28401').find_each do |card|
         csv << card.attributes.except('created_at', 'updated_at').values
       end
     end
