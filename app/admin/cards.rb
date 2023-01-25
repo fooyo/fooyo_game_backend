@@ -7,7 +7,7 @@ ActiveAdmin.register Card do
   # config.per_page = 20
   # actions :all, except: %i[new destroy]
   order_by(:customer_order) do |order_clause|
-    ['user_id is null', 'is_used desc'].join(", ")
+    ['user_id is null', 'is_used desc', 'id asc'].join(", ")
   end
    # config.paginate = true
   # config.per_page = 20
